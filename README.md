@@ -25,7 +25,7 @@ fpga/
   quartus-vg/           seven-segment variant: top level + SPI ADC driver + buzzer driver +
                         6-digit display driver; also holds tb_traffic_lights.v and the
                         Waveform1.vwf simulation waveform
-  quartus-vg-demo/      earlier build of the seven-segment variant; its folder also contains
+  quartus-vg-demo/      demo build of the seven-segment variant; its folder also contains
                         an OLED driver skeleton (oled_disp_driver.v) that the top level
                         does not instantiate
   simulation/           simplified display-less model used for simulation
@@ -127,7 +127,7 @@ fpga/
                         字符 ROM、OLED 显示状态机与蜂鸣器逻辑（Quartus 工程）
   quartus-vg/           数码管方案：顶层 + SPI ADC 驱动 + 蜂鸣器驱动 + 6 位数码管驱动；
                         该目录还放着 tb_traffic_lights.v 与仿真波形 Waveform1.vwf
-  quartus-vg-demo/      数码管方案的早期版本；目录里另有一个 OLED 驱动骨架
+  quartus-vg-demo/      数码管方案的演示版；目录里另有一个 OLED 驱动骨架
                         （oled_disp_driver.v），但顶层并没有实例化它
   simulation/           用于仿真的简化版（不含显示器）
 ```
