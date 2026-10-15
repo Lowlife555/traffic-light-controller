@@ -57,6 +57,20 @@ fpga/
 - Build artefacts (`db/`, `incremental_db/`, `output_files/`, `Objects/`, `Listings/`, `*.sof`, `*.hex`, …) and the course assignment brief and report are intentionally **not** committed — see `.gitignore`.
 - The FPGA design was verified on hardware and through a Quartus simulation waveform; the committed testbench is only a placeholder.
 
+## Team and attribution
+
+EL2242 (March 2026) was assessed as an **individual implementation plus a paired team project**. The one specification produced two implementations, and both are kept here so they can be compared directly:
+
+| Part | Who | Content |
+|---|---|---|
+| **STM32 register-level firmware** (`arm/`) | **Ni Youjia** — individual work | No HAL anywhere: the MSI clock is multiplied to **80 MHz** through the PLL by register writes (PLLN = 40, PLLR = 2), GPIO / ADC1 / I2C1 / TIM3 are configured by register access, and the FSM is stepped in the **1 ms `TIM3_IRQHandler`**. Also authored the cross-platform comparative analysis. |
+| **FPGA / Verilog design** (`fpga/`) | **Mo Yan** | Top-level Verilog and the FSM, the hand-written native I²C master that drives the SSD1306 OLED, the character ROM and display state machine, the buzzer divider logic, pin constraints and Quartus project setup, timing analysis and simulation-waveform verification. |
+| Joint | both | System integration, functional testing, waveform verification and the English technical report. |
+
+**With thanks to Mo Yan**, whose FPGA design is published here — without it this repository would only hold one half of the comparison. The `arm/` folder additionally keeps earlier iteration snapshots of the controller so the development history stays visible.
+
+**Cross-platform result.** The MCU version is limited to microsecond-level timing by interrupt sequencing and serial-peripheral access, whereas the FPGA evaluates its branch conditions in parallel within a single clock cycle, giving nanosecond-level hardware determinism. The FPGA design uses **794 logic elements (13%), 166 registers (3%) and 20 pins (22%)**, with a full compile in 16 seconds.
+
 ---
 
 # 交通灯控制器 —— ARM（寄存器级）+ FPGA（Verilog）
@@ -117,3 +131,17 @@ fpga/
 
 - 编译产物（`db/`、`incremental_db/`、`output_files/`、`Objects/`、`Listings/`、`*.sof`、`*.hex` …）以及课程任务书与报告**有意未入库**，见 `.gitignore`。
 - FPGA 设计在硬件上和 Quartus 仿真波形里都验证过；仓库里提交的测试平台只是占位文件。
+
+## 团队与分工
+
+EL2242（2026 年 3 月）的考核形式是**个人实现 + 双人团队项目**。同一份需求书产生了两种实现，两者都保留在这里，便于直接对照：
+
+| 部分 | 谁 | 内容 |
+|---|---|---|
+| **STM32 寄存器级固件**（`arm/`） | **Ni Youjia** —— 个人独立完成 | 全程不用 HAL：以寄存器写操作把 MSI 经 PLL 倍频至 **80 MHz**（PLLN = 40、PLLR = 2），用寄存器配置 GPIO / ADC1 / I2C1 / TIM3，并在 **1 ms 的 `TIM3_IRQHandler`** 里推进状态机；同时负责两平台对比分析。 |
+| **FPGA / Verilog 设计**（`fpga/`） | **莫妍（Mo Yan）** | Verilog 顶层与状态机、自写原生 I²C 主控驱动 SSD1306 OLED、字符 ROM 与显示状态机、蜂鸣器分频逻辑、引脚约束与 Quartus 工程配置、时序分析与仿真波形验证。 |
+| 共同完成 | 两人 | 系统联调、功能测试、波形验证与英文技术报告。 |
+
+**特别感谢莫妍（Mo Yan）** —— 她的 FPGA 设计收录在此；没有它，这个仓库就只剩对照实验的一半。`arm/` 目录另外保留了控制器的多个早期迭代版本，以便看到开发过程。
+
+**跨平台结论**：MCU 侧受中断顺序执行与串行外设访问限制，只有微秒级时序；FPGA 侧在一个时钟周期内并行完成支路判据，具备纳秒级硬件确定性。FPGA 设计占用 **794 个逻辑单元（13%）、166 个寄存器（3%）、20 个引脚（22%）**，全流程编译 16 秒。
