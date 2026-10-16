@@ -1,5 +1,7 @@
 # Traffic Light Controller — ARM (register level) + FPGA (Verilog)
 
+- **Coursework report**: [`docs/EL2242-FSM-Report.pdf`](docs/EL2242-FSM-Report.pdf) — 18 pages, the submitted EL2242 report (student identifiers redacted)
+
 A pedestrian-crossing traffic-light controller implemented **twice**, on two completely different platforms, as Year-2 undergraduate coursework (EL2242 – Digital Systems / Embedded Systems). Both halves drive the same **SSD1306 OLED** as their status display.
 
 1. **Bare-metal ARM firmware** on an STM32L476RG — written directly against CMSIS registers (no HAL), with the controller state machine stepped from a 1 ms timer interrupt.
@@ -101,6 +103,8 @@ EL2242 (March 2026) was a **two-person team project**. One specification, implem
 **Cross-platform result.** The MCU version is limited to microsecond-level timing by interrupt sequencing and serial-peripheral access, whereas the FPGA evaluates its branch conditions in parallel within a single clock cycle, giving nanosecond-level hardware determinism. The Quartus fitter report for that build gives **794 logic elements (13%), 166 registers (3%) and 20 pins (22%)** with a 16-second compile — the report itself is not committed, so these figures cannot be recomputed from this repository.
 
 ---
+
+- **课程报告**：[`docs/EL2242-FSM-Report.pdf`](docs/EL2242-FSM-Report.pdf) —— 提交版 EL2242 报告，18 页（已脱敏学号等个人信息）
 
 # 交通灯控制器 —— ARM（寄存器级）+ FPGA（Verilog）
 
